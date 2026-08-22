@@ -1,0 +1,86 @@
+# =========================
+# Secrets
+# =========================
+
+.env
+.env.*
+!.env.example
+
+/etc/
+secrets/
+*.pem
+*.key
+*.crt
+
+# =========================
+# Databases / runtime data
+# =========================
+
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+
+navidrome-data/
+tagr-data/
+copyparty-data/
+
+# =========================
+# Python
+# =========================
+
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+beets-venv/
+
+# =========================
+# Logs
+# =========================
+
+*.log
+*.log.*
+logs/
+
+# =========================
+# Temporary files
+# =========================
+
+*.tmp
+*.temp
+*.bak
+*.swp
+.DS_Store
+
+# =========================
+# Music / user files
+# =========================
+
+library/
+upload/
+music/
+*.mp3
+*.m4a
+*.flac
+*.ogg
+*.wav
+*.opus
+
+# =========================
+# Node
+# =========================
+
+node_modules/
+.next/
+dist/
+build/
+
+# =========================
+# Docker
+# =========================
+
+docker-compose.override.yml
+tagr-src/.git/
+tagr-src/.git-backup/

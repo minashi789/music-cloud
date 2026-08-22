@@ -1,0 +1,469 @@
+{
+  "nav": {
+    "home": "Home",
+    "settings": "Settings"
+  },
+  "navigation": {
+    "folders": "Folders",
+    "library": "Library",
+    "songs": "Songs",
+    "details": "Details"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "duplicate": "Duplicate",
+    "search": "Search",
+    "logout": "Log out",
+    "unknown": "Unknown",
+    "more": "More",
+    "less": "Less"
+  },
+  "folders": {
+    "title": "Tagr",
+    "subtitle": "Music library management",
+    "empty": "No folders configured",
+    "notFound": "No folders found",
+    "searchPlaceholder": "Search folders...",
+    "totalFolders": "{count} folders",
+    "totalFiles": "{count, plural, =0 {No files} one {# file} other {# files}}",
+    "totalSubfolders": "{count, plural, =0 {No subfolders} one {# subfolder} other {# subfolders}}",
+    "allFolders": "All Folders",
+    "selectFolder": "Select a folder or playlist",
+    "selectFolderDescription": "Choose a folder or a smart playlist from the sidebar to view its music files",
+    "browseFolders": "Browse library",
+    "loadingFolders": "Loading folders...",
+    "errorLoading": "Error loading",
+    "errorLoadingDescription": "Could not load folders",
+    "file": "{count, plural, one {file} other {files}}",
+    "files": "{count} files",
+    "subfolder": "{count, plural, one {subfolder} other {subfolders}}",
+    "subfolders": "{count} subfolders",
+    "quickScan": "Quick scan",
+    "quickScanDescription": "Only scans new or modified files",
+    "quickScanConfirmTitle": "Quick scan?",
+    "quickScanConfirmDescription": "Only processes new files and files whose modification date has changed. Ideal for when you've added new music or replaced files. Files edited externally without changing the modification date will not be detected.",
+    "fullScan": "Full scan",
+    "fullScanDescription": "Re-scans all files and updates metadata",
+    "fullScanConfirmTitle": "Full scan?",
+    "fullScanConfirmDescription": "Re-reads metadata from every file in your library and updates the database. Use this if you've edited tags with an external application (e.g. MusicBrainz Picard, Mp3tag), if you suspect the database is out of sync, or after a Tagr update. This may take a while for large libraries.",
+    "skipped": "skipped",
+    "rescan": "Rescan library",
+    "history": "View change history",
+    "feedback": "Send feedback",
+    "installApp": "Install app",
+    "appInstalled": "App installed",
+    "manageUsers": "Manage users",
+    "scanning": "Scanning library...",
+    "scanningProgress": "Scanning library... ({current}/{total})",
+    "scanCompleted": "Scan completed",
+    "scanFailed": "Scan failed",
+    "filesScanned": "files scanned",
+    "added": "added",
+    "updated": "updated",
+    "deleted": "deleted",
+    "errors": "errors",
+    "viewDetails": "Details",
+    "unknownError": "Unknown error occurred"
+  },
+  "scanSummary": {
+    "title": "Scan summary",
+    "totalFiles": "{count, plural, one {# file processed} other {# files processed}}"
+  },
+  "summary": {
+    "added": "Added",
+    "updated": "Updated",
+    "cover": "Updated",
+    "deleted": "Deleted",
+    "skipped": "Skipped",
+    "errors": "Errors",
+    "andMore": "…and {count, plural, one {# more} other {# more}}"
+  },
+  "files": {
+    "title": "Files",
+    "empty": "No music files found",
+    "emptyDescription": "This folder or smart playlist contains no music files. Try scanning your library or selecting a source.",
+    "syncNow": "Scan now",
+    "details": "File details",
+    "selectFile": "Select a file to view its details",
+    "fileInfo": "File information",
+    "searchPlaceholder": "Search songs by title artist album publisher comment or file name...",
+    "filterPlaceholder": "Filter...",
+    "filterPlaceholderPressEnter": "Press Enter to add a filter...",
+    "dateFilterPlaceholder": "Select a date...",
+    "noFilterResults": "No songs match the current filters",
+    "clearFilters": "Clear filters",
+    "clearDateFilter": "Clear",
+    "applyDateFilter": "Apply",
+    "booleanFilterAll": "All",
+    "booleanFilterYes": "Yes",
+    "booleanFilterNo": "No",
+    "selectFilterAll": "All",
+    "selectFilterSelected": "{count} selected"
+  },
+  "musicInfo": {
+    "title": "Song Info"
+  },
+  "trackInfo": {
+    "title": "Track Info",
+    "of": "of"
+  },
+  "audioProperties": {
+    "title": "Audio Properties"
+  },
+  "notes": {
+    "title": "Notes"
+  },
+  "customTags": {
+    "title": "Custom Tags",
+    "addTag": "Add Tag",
+    "key": "Key",
+    "value": "Value",
+    "empty": "No custom tags",
+    "keyPlaceholder": "Tag name (e.g. MOOD)",
+    "valuePlaceholder": "Tag value",
+    "deleteConfirm": "Remove this tag?"
+  },
+  "playback": {
+    "volume": "Volume",
+    "startTime": "Start Time",
+    "stopTime": "Stop Time",
+    "gapless": "Gapless"
+  },
+  "fields": {
+    "title": "Title",
+    "artist": "Artist",
+    "sortArtist": "Sort Artist",
+    "album": "Album",
+    "sortAlbum": "Sort Album",
+    "albumArtist": "Album Artist",
+    "sortAlbumArtist": "Sort Album Artist",
+    "year": "Year",
+    "genre": "Genre",
+    "composer": "Composer",
+    "conductor": "Conductor",
+    "bpm": "BPM",
+    "grouping": "Grouping",
+    "publisher": "Publisher",
+    "catalogNumber": "Catalog Number",
+    "lyricist": "Lyricist",
+    "barcode": "Barcode",
+    "work": "Work",
+    "originalReleaseDate": "Original Release Date",
+    "copyright": "Copyright",
+    "rating": "Rating",
+    "compilation": "Compilation",
+    "trackNumber": "Track",
+    "trackTotal": "Total Tracks",
+    "discNumber": "Disc",
+    "discTotal": "Total Discs",
+    "duration": "Duration",
+    "comment": "Comment",
+    "lyrics": "Lyrics",
+    "codec": "Codec",
+    "bitrate": "Bitrate",
+    "sampleRate": "Sample Rate",
+    "channels": "Channels",
+    "bitsPerSample": "Bit Depth",
+    "encoder": "Encoder",
+    "bitDepthValue": "{value}-bit",
+    "extension": "Format",
+    "fileSize": "Size",
+    "modifiedAt": "Modified",
+    "createdAt": "Created",
+    "picture": "Cover Art",
+    "fileName": "File Name",
+    "filePath": "File Path",
+    "folderPath": "Folder Path",
+    "dateAdded": "Date Added",
+    "lastPlayed": "Last Played",
+    "playCount": "Play Count",
+    "lossless": "Lossless"
+  },
+  "history": {
+    "title": "Change History",
+    "titleForSong": "History — {songTitle}",
+    "empty": "No changes recorded yet",
+    "unknownSong": "Unknown",
+    "revert": "Revert",
+    "searchPlaceholder": "Filter by song title or artist...",
+    "viewHistory": "View change history",
+    "rescanSong": "Rescan song file",
+    "revertSelected": "Revert {count, plural, one {# change} other {# changes}}",
+    "clearSelection": "Deselect all",
+    "emptyValue": "—"
+  },
+  "columns": {
+    "toggleColumns": "Columns",
+    "genericTags": "Generic Tags",
+    "customTags": "Custom Tags"
+  },
+  "previewCard": {
+    "play": "Play",
+    "pause": "Pause",
+    "editCover": "Edit cover",
+    "downloadCover": "Download cover",
+    "lossless": "Lossless"
+  },
+  "musicbrainzLookup": {
+    "title": "MusicBrainz — {songTitle}",
+    "tooltip": "Look up metadata on MusicBrainz",
+    "search": "Search",
+    "back": "Back",
+    "score": "Score: {score}%",
+    "noResults": "No recordings found",
+    "field": "Field",
+    "currentValue": "Current",
+    "mbValue": "MusicBrainz",
+    "applySelected": "Apply Selected",
+    "noFields": "No metadata fields available from this release",
+    "coverArt": "Cover Art",
+    "currentCover": "Current",
+    "mbCover": "MusicBrainz",
+    "noCover": "No cover",
+    "replaceCover": "Replace cover art"
+  },
+  "musicbrainz": {
+    "fetchSuccess": "Cover art updated from MusicBrainz",
+    "fetchError": "Failed to fetch cover art",
+    "unknownError": "An unknown error occurred",
+    "fetchMusicBrainz": "Fetch cover from MusicBrainz",
+    "fetchMusicBrainzConfirmTitle": "Fetch cover from MusicBrainz?",
+    "fetchMusicBrainzConfirmDescription": "This will search MusicBrainz for album art and replace the current cover image if found. This action can be undone in the history.",
+    "fetchMusicBrainzConfirmAction": "Fetch cover"
+  },
+  "stats": {
+    "title": "Stats"
+  },
+  "formats": {
+    "mp3": "MPEG Audio Layer 3",
+    "flac": "Free Lossless Audio Codec",
+    "wav": "Waveform Audio",
+    "m4a": "MPEG-4 Audio",
+    "m4b": "MPEG-4 Audiobook",
+    "ogg": "Ogg Vorbis",
+    "aac": "Advanced Audio Coding",
+    "unknown": "Audio File"
+  },
+  "login": {
+    "title": "Sign In",
+    "description": "Enter your credentials to access your account",
+    "username": "Username",
+    "usernamePlaceholder": "Enter your username",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "submit": "Sign In",
+    "submitting": "Signing in...",
+    "invalidCredentials": "Invalid username or password",
+    "genericError": "An error occurred. Please try again."
+  },
+  "welcome": {
+    "title": "Welcome to Tagr",
+    "description": "Tagr needs to scan your music folders to build a local database. This makes browsing and searching your library fast and smooth. No data leaves your machine.",
+    "timing": "This process may take a few minutes depending on the size of your library.",
+    "scanButton": "Scan library",
+    "scanning": "Scanning your library..."
+  },
+  "version": {
+    "updateAvailable": "Version {version} is available",
+    "viewRelease": "View release",
+    "dismiss": "Dismiss"
+  },
+  "savedFilters": {
+    "title": "Filters",
+    "save": "Save",
+    "saveCurrentFilters": "Save current filters",
+    "filterName": "Filter name",
+    "noSavedFilters": "No saved filters",
+    "deleteFilter": "Delete filter",
+    "loadFilter": "Load filter"
+  },
+  "share": {
+    "tooltip": "Share song",
+    "title": "Share Song",
+    "description": "Generate a temporary listen-only link. Recipients can play the song but cannot modify or delete any data.",
+    "expiration": "Link expires in",
+    "generate": "Generate Link",
+    "generating": "Generating...",
+    "copyLink": "Copy link",
+    "copied": "Copied!",
+    "linkReady": "Share link ready",
+    "expiresAt": "Expires {date}",
+    "pageTitle": "Shared Song — {title}",
+    "expired": "This share link has expired",
+    "notFound": "Share link not found",
+    "errorDescription": "This link may have expired or been removed.",
+    "sharedVia": "Shared via",
+    "of": "of",
+    "metadata": {
+      "fallbackTitle": "Tagr — Shared Song",
+      "untitled": "Untitled",
+      "unknownArtist": "Unknown Artist",
+      "title": "{title} — {artist} | Tagr",
+      "description": "Listen to {title} by {artist}",
+      "descriptionWithAlbum": "Listen to {title} by {artist} from {album}",
+      "ogTitle": "{title} — {artist}"
+    }
+  },
+  "time": {
+    "fiveMinutes": "5 minutes",
+    "fifteenMinutes": "15 minutes",
+    "oneHour": "1 hour",
+    "sixHours": "6 hours",
+    "twentyFourHours": "24 hours",
+    "sevenDays": "7 days",
+    "thirtyDays": "30 days"
+  },
+  "starPrompt": {
+    "title": "Enjoying Tagr?",
+    "description": "If Tagr has been useful to you, consider giving it a star on GitHub. It helps others discover the project! Don't worry, we won't ask again.",
+    "starOnGithub": "Star on GitHub",
+    "maybeLater": "No thanks"
+  },
+  "api": {
+    "folders": {
+      "noFoldersConfigured": "No music folders configured. Set the MUSIC_FOLDERS environment variable.",
+      "pathNotDirectory": "The path is not a directory",
+      "unknownError": "Unknown error reading the folder"
+    }
+  },
+  "users": {
+    "title": "Manage Users",
+    "createUser": "Create user",
+    "editUser": "Edit user",
+    "deleteUser": "Delete user",
+    "deleteConfirm": "Are you sure you want to delete user \"{username}\"?",
+    "username": "Username",
+    "password": "Password",
+    "passwordHint": "Leave blank to keep current",
+    "role": "Role",
+    "roles": {
+      "admin": "Admin",
+      "tagger": "Tagger",
+      "listener": "Listener"
+    },
+    "roleDescriptions": {
+      "tagger": "Can browse, play, edit metadata tags, and rescan the library",
+      "listener": "Can only browse and play music"
+    },
+    "noUsers": "No users yet",
+    "noUsersDescription": "Create your first user to get started",
+    "userCreated": "User created",
+    "userUpdated": "User updated",
+    "userDeleted": "User deleted",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "smartPlaylists": {
+    "title": "Smart Playlists",
+    "newPlaylist": "New smart playlist",
+    "publicHeader": "Public Smart Playlists",
+    "publicBadge": "Public",
+    "empty": "No smart playlists yet",
+    "confirmDelete": "Delete smart playlist \"{name}\"?",
+    "copy": "copy",
+    "viewing": {
+      "label": "Smart Playlist"
+    },
+    "create": {
+      "title": "Create smart playlist",
+      "description": "Define rules to automatically include songs that match any field.",
+      "name": "Name",
+      "namePlaceholder": "My smart playlist",
+      "isPublic": "Make this playlist visible to other users",
+      "matchLabel": "Match",
+      "matchAll": "Match all rules (AND)",
+      "matchAny": "Match any rule (OR)",
+      "rulesLabel": "Rules",
+      "addRule": "Add rule",
+      "standardFields": "Song fields",
+      "customFields": "Custom metadata",
+      "valuePlaceholder": "Value"
+    },
+    "edit": {
+      "title": "Edit smart playlist"
+    },
+    "operators": {
+      "equals": "equals",
+      "notEquals": "not equals",
+      "contains": "contains",
+      "notContains": "does not contain",
+      "startsWith": "starts with",
+      "endsWith": "ends with",
+      "isEmpty": "is empty",
+      "isNotEmpty": "is not empty",
+      "gt": "greater than",
+      "gte": "greater than or equal",
+      "lt": "less than",
+      "lte": "less than or equal",
+      "before": "before",
+      "after": "after",
+      "on": "on",
+      "isTrue": "is true",
+      "isFalse": "is false"
+    }
+  },
+  "bulkEdit": {
+    "selectAllButton": "Select all songs",
+    "contextMenu": {
+      "selectSong": "Select song",
+      "selectAllFolder": "Select entire folder",
+      "selectAllPlaylist": "Select entire smart playlist",
+      "clearSelection": "Clear selection"
+    },
+    "actionBar": {
+      "selectedCount": "{count, plural, one {# song selected} other {# songs selected}}",
+      "wholeFolder": "(whole folder)",
+      "wholePlaylist": "(whole playlist)",
+      "edit": "Edit",
+      "fetchCovers": "Get covers from MusicBrainz",
+      "cancel": "Cancel selection"
+    },
+    "edit": {
+      "title": "Bulk edit",
+      "description": "Touched fields will be applied to every selected song. Untouched fields stay unchanged.",
+      "variousPlaceholder": "(various)",
+      "partialSampleNote": "Showing common values from {loaded} loaded songs out of {total}. Untouched fields will stay unchanged on every selected song.",
+      "noFieldsTouched": "Edit at least one field before continuing.",
+      "next": "Continue",
+      "sections": {
+        "music": "Music",
+        "track": "Track",
+        "misc": "Misc"
+      }
+    },
+    "cover": {
+      "title": "Get covers from MusicBrainz",
+      "description": "Each selected song looks up its own MusicBrainz release and writes the cover. The operation is rate-limited to one request per second.",
+      "estimate": "Estimated time: ~{duration} for {count, plural, one {# song} other {# songs}}.",
+      "warning": "Existing cover art will be overwritten, but can be restored from the history if needed."
+    },
+    "progress": {
+      "label": "Processing {completed} / {total}"
+    },
+    "confirm": {
+      "affecting": "{count, plural, one {# song affected} other {# songs affected}}",
+      "applyToCount": "Apply to {count, plural, one {# song} other {# songs}}",
+      "context": {
+        "explicit": "{count, plural, one {# song selected} other {# songs selected}}",
+        "folder": "Folder {name}",
+        "playlist": "Smart playlist {name}"
+      }
+    },
+    "result": {
+      "success": "{count, plural, one {# song updated} other {# songs updated}}",
+      "partial": "{ok} updated, {failed} failed",
+      "allFailed": "All {count} songs failed",
+      "viewDetails": "Details"
+    }
+  },
+  "bulkSummary": {
+    "titleEdit": "Bulk edit summary",
+    "titleCover": "Cover fetch summary",
+    "totalFiles": "{count, plural, one {# song processed} other {# songs processed}}"
+  }
+}

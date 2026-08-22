@@ -1,0 +1,112 @@
+services:
+  navidrome:
+    image: "deluan/navidrome:0.63.0"
+    container_name: music-cloud-navidrome
+    user: "0:0"
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:4533:4533"
+    env_file:
+      - .env
+    environment:
+      ND_MUSICFOLDER: /music
+      ND_DATAFOLDER: /data
+      ND_LOGLEVEL: info
+      ND_SCANNER_SCANONSTARTUP: "true"
+      ND_SCANNER_SCHEDULE: "1m"
+      ND_LASTFM_ENABLED: "true"
+      ND_LASTFM_APIKEY: "${ND_LASTFM_APIKEY}"
+      ND_LASTFM_SECRET: "${ND_LASTFM_SECRET}"
+    volumes:
+      - "/srv/music-cloud/library:/music:ro"
+      - "/opt/music-cloud/navidrome-data:/data"
+    security_opt:
+      - no-new-privileges:true
+
+  uploads:
+    image: "copyparty/ac:1.20.19"
+    container_name: music-cloud-uploads
+    user: "0:0"
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      - "/srv/music-cloud/upload:/upload"
+      - "/opt/music-cloud/copyparty-data:/cfg"
+    stop_grace_period: 15s
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q 'http://127.0.0.1:3923/uploads/?reset=/._'"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 20s
+    security_opt:
+      - no-new-privileges:true
+
+  tagr:
+    build:
+      context: "/opt/music-cloud/tagr-src"
+      args:
+        APP_VERSION: "v1.8.6"
+    image: "local/music-cloud-tagr:v1.8.6"
+    container_name: music-cloud-tagr
+    restart: unless-stopped
+    entrypoint:
+      - "/bin/sh"
+      - "/run/music-cloud/tagr-entrypoint.sh"
+    ports:
+      - "127.0.0.1:3000:3000"
+    env_file:
+      - .env
+    environment:
+      PUID: "0"
+      PGID: "0"
+      NODE_ENV: production
+      DATABASE_URL: "file:/data/tagr.db"
+      AUTH_URL: "${AUTH_URL}"
+      AUTH_TRUST_HOST: "true"
+      MUSIC_FOLDERS: "/music"
+    volumes:
+      - "/opt/music-cloud/tagr-data:/data"
+      - "/srv/music-cloud/library:/music"
+      - "/opt/music-cloud/tagr-entrypoint.sh:/run/music-cloud/tagr-entrypoint.sh:ro"
+      - "/etc/music-cloud/secrets/tagr-login:/run/secrets/tagr_login:ro"
+      - "/etc/music-cloud/secrets/tagr-password:/run/secrets/tagr_password:ro"
+      - "/etc/music-cloud/secrets/tagr-secret:/run/secrets/tagr_secret:ro"
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q 'http://127.0.0.1:3000/tags/login'"]
+      interval: 5s
+      timeout: 3s
+      retries: 18
+      start_period: 45s
+    security_opt:
+      - no-new-privileges:true
+
+  spotdl-wave:
+    build:
+      context: .
+      dockerfile: Dockerfile.wave
+    container_name: spotdl-wave
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - /srv/music-cloud/library/MyWave:/music
+      - /opt/music-cloud/wave.py:/wave.py
+    working_dir: /music
+    entrypoint: /bin/sh
+    environment:
+      PATH: "/home/spotdl/.local/bin:/usr/local/bin:/usr/bin:/bin"
+      USERNAME: "${USERNAME}"
+      API_KEY: "${API_KEY}"
+    command: >
+      -c "
+      pip install --no-cache-dir spotdl > /dev/null 2>&1;
+      while true; do
+        echo 'Запуск генерации персональной Волны...';
+        python3 /wave.py;
+        echo 'Синхронизация завершена. Ожидание 24 часа...';
+        sleep 86400;
+      done
+      "

@@ -1,0 +1,35 @@
+import path from 'path'
+import { NextResponse } from 'next/server'
+import { findSharedLinkWithSongFile } from '@/features/share/share.repository'
+import { streamAudioFile } from '@/features/songs/audio-stream'
+
+interface RouteParams {
+  params: Promise<{ token: string }>
+}
+
+export async function GET(request: Request, { params }: RouteParams) {
+  const { token } = await params
+
+  try {
+    const sharedLink = await findSharedLinkWithSongFile(token)
+
+    if (!sharedLink) {
+      return NextResponse.json({ success: false, error: 'Share link not found' }, { status: 404 })
+    }
+
+    if (new Date() > sharedLink.expiresAt) {
+      return NextResponse.json({ success: false, error: 'Share link has expired' }, { status: 410 })
+    }
+
+    const response = streamAudioFile(sharedLink.song.filePath, request.headers.get('range'))
+    const fileName = sharedLink.song.fileName || path.basename(sharedLink.song.filePath)
+    response.headers.set('Content-Disposition', `inline; filename="${fileName}"`)
+    return response
+  } catch (error) {
+    console.error('Error streaming shared audio:', error)
+    return NextResponse.json(
+      { success: false, error: error instanceof Error ? error.message : 'Unknown error' },
+      { status: 500 }
+    )
+  }
+}

@@ -1,0 +1,95 @@
+'use client'
+
+import { ChevronsUpDown } from 'lucide-react'
+import { useRef, useState } from 'react'
+import { useTranslations } from 'next-intl'
+import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
+import { Input } from '@/components/ui/input'
+import { FILTERS_MULTI_VALUE_SEPARATOR, type SongSortField } from '@/features/songs/domain'
+import { useDistinctValues } from '@/features/songs/hooks/use-distinct-values'
+import { useHomeStore } from '@/stores/home-store'
+
+export function SelectFilterInput({ field }: { field: SongSortField }) {
+  const columnFilters = useHomeStore(s => s.columnFilters)
+  const setColumnFilter = useHomeStore(s => s.setColumnFilter)
+  const tFiles = useTranslations('files')
+  const { data: values = [] } = useDistinctValues(field)
+  const [search, setSearch] = useState('')
+  const searchRef = useRef<HTMLInputElement>(null)
+
+  const raw = columnFilters[field] ?? ''
+  const selected = raw ? raw.split(FILTERS_MULTI_VALUE_SEPARATOR) : []
+
+  const toggle = (value: string) => {
+    const next = selected.includes(value) ? selected.filter(v => v !== value) : [...selected, value]
+    setColumnFilter(field, next.join(FILTERS_MULTI_VALUE_SEPARATOR))
+  }
+
+  const clearAll = () => setColumnFilter(field, '')
+
+  const filtered = search ? values.filter(v => v.toLowerCase().includes(search.toLowerCase())) : values
+
+  const label = selected.length === 0 ? tFiles('selectFilterAll') : selected.join(', ')
+
+  const handleOpenChange = (v: boolean) => {
+    if (v) requestAnimationFrame(() => searchRef.current?.focus())
+  }
+
+  return (
+    <div onClick={e => e.stopPropagation()}>
+      <DropdownMenu onOpenChange={handleOpenChange}>
+        <DropdownMenuTrigger asChild>
+          <Button variant='outline' size='sm' className='h-6 w-full justify-between text-xs font-normal px-1.5'>
+            <span className='truncate'>{label}</span>
+            <ChevronsUpDown className='ml-1 h-3 w-3 shrink-0 opacity-50' />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          side='bottom'
+          align='start'
+          sticky='always'
+          collisionPadding={16}
+          className='min-w-(--radix-dropdown-menu-trigger-width) max-h-[min(16rem,var(--radix-dropdown-menu-content-available-height))] overflow-y-auto'>
+          <div className='p-1'>
+            <Input
+              ref={searchRef}
+              className='h-6 text-xs px-1.5'
+              placeholder={tFiles('filterPlaceholder')}
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              onKeyDown={e => e.stopPropagation()}
+            />
+          </div>
+          {selected.length > 0 && (
+            <>
+              <DropdownMenuItem onSelect={clearAll} className='text-xs text-muted-foreground'>
+                {tFiles('selectFilterAll')}
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+            </>
+          )}
+          <DropdownMenuGroup>
+            {filtered.map(v => (
+              <DropdownMenuCheckboxItem
+                key={v}
+                checked={selected.includes(v)}
+                onCheckedChange={() => toggle(v)}
+                className='text-xs'>
+                {v}
+              </DropdownMenuCheckboxItem>
+            ))}
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  )
+}

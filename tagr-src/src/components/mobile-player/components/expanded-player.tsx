@@ -1,0 +1,108 @@
+'use client'
+
+import { ChevronDown, MusicIcon, RepeatIcon, ShuffleIcon } from 'lucide-react'
+import { PlayButton } from '@/components/play-button'
+import { SkipButton } from '@/components/skip-button'
+import { Button } from '@/components/ui/button'
+import { Image } from '@/components/ui/image'
+import { cn } from '@/lib/utils'
+import type { Song } from '@/features/songs/domain'
+import { getSongPictureUrl } from '@/features/songs/song-file-helpers'
+import { ExpandedPlayerWaveform } from './expanded-player-waveform'
+import { useSelectedSong } from '@/hooks/use-selected-song'
+import { useSwipe } from '@/hooks/use-swipe'
+import { usePlayerStore } from '@/stores/player-store'
+
+interface ExpandedPlayerProps {
+  song: Song
+  expanded: boolean
+  onCollapse: () => void
+}
+
+export function ExpandedPlayer({ song, expanded, onCollapse }: ExpandedPlayerProps) {
+  const isPlaying = usePlayerStore(s => s.isPlaying)
+  const isBuffering = usePlayerStore(s => s.isBuffering)
+  const isAdjacentLoading = usePlayerStore(s => s.isAdjacentLoading)
+  const togglePlayPause = usePlayerStore(s => s.togglePlayPause)
+  const playPrevious = usePlayerStore(s => s.playPrevious)
+  const playNext = usePlayerStore(s => s.playNext)
+  const _previousSong = usePlayerStore(s => s._previousSong)
+  const _nextSong = usePlayerStore(s => s._nextSong)
+  const shuffle = usePlayerStore(s => s.shuffle)
+  const toggleShuffle = usePlayerStore(s => s.toggleShuffle)
+  const repeat = usePlayerStore(s => s.repeat)
+  const toggleRepeat = usePlayerStore(s => s.toggleRepeat)
+  const { setSelectedSongId } = useSelectedSong()
+
+  const pictureUrl = getSongPictureUrl(song.id, song.modifiedAt)
+
+  const bind = useSwipe({ direction: 'down', onSwipe: onCollapse })
+
+  const openDetail = () => {
+    setSelectedSongId(song.id)
+    onCollapse()
+  }
+
+  return (
+    <div
+      {...bind()}
+      className={`fixed inset-x-0 bottom-14 z-40 border-t bg-background/95 backdrop-blur-sm transition-transform duration-300 ease-in-out touch-pan-x ${expanded ? 'translate-y-0' : 'translate-y-full'}`}>
+      <div className='flex flex-col items-center px-6 py-5 gap-4'>
+        <button type='button' className='self-end' onClick={onCollapse}>
+          <ChevronDown className='h-5 w-5 text-muted-foreground' />
+        </button>
+
+        <div
+          className='w-48 h-48 rounded-2xl overflow-hidden shadow-xl bg-muted flex items-center justify-center'
+          onClick={openDetail}>
+          <Image
+            src={pictureUrl}
+            alt=''
+            width={192}
+            height={192}
+            className='w-full h-full object-cover'
+            unoptimized
+            fallbackComponent={<MusicIcon className='w-16 h-16 text-muted-foreground' />}
+          />
+        </div>
+
+        <button type='button' className='text-center min-w-0 w-full' onClick={openDetail}>
+          <p className='text-base font-semibold truncate'>{song.title || song.fileName}</p>
+          {song.artist && <p className='text-sm text-muted-foreground truncate'>{song.artist}</p>}
+        </button>
+
+        <div className='w-full px-2'>
+          <ExpandedPlayerWaveform songId={song.id} />
+        </div>
+
+        <div className='flex items-center gap-3'>
+          <Button
+            variant='ghost'
+            size='icon'
+            className={cn(
+              'h-7 w-7 text-muted-foreground/70 hover:text-foreground',
+              repeat && 'text-primary hover:text-primary'
+            )}
+            onClick={toggleRepeat}
+            aria-pressed={repeat}>
+            <RepeatIcon className='h-3.5 w-3.5' />
+          </Button>
+          <SkipButton direction='back' size='lg' onSkip={playPrevious} disabled={!_previousSong || isAdjacentLoading} />
+          <PlayButton isPlaying={isPlaying} isBuffering={isBuffering} onToggle={togglePlayPause} size='lg' />
+          <SkipButton direction='forward' size='lg' onSkip={playNext} disabled={!_nextSong || isAdjacentLoading} />
+          <Button
+            variant='ghost'
+            size='icon'
+            className={cn(
+              'h-7 w-7 text-muted-foreground/70 hover:text-foreground',
+              shuffle && 'text-primary hover:text-primary'
+            )}
+            onClick={toggleShuffle}
+            aria-pressed={shuffle}>
+            <ShuffleIcon className='h-3.5 w-3.5' />
+          </Button>
+        </div>
+      </div>
+    </div>
+  )
+}

@@ -1,0 +1,120 @@
+'use client'
+
+import { CalendarIcon, Check, X } from 'lucide-react'
+import { useState } from 'react'
+import type { DateRange } from 'react-day-picker'
+import { useTranslations } from 'next-intl'
+import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
+import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from '@/components/ui/input-group'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { useHomeStore } from '@/stores/home-store'
+import type { SongSortField } from '@/features/songs/domain'
+import { formatDate, formatDateRange, parseIsoDate } from '@/lib/date'
+
+function parseRange(value: string | undefined): DateRange | undefined {
+  if (!value) return undefined
+  const [fromStr, toStr] = value.split('..')
+  return {
+    from: fromStr ? parseIsoDate(fromStr) : undefined,
+    to: toStr ? parseIsoDate(toStr) : undefined
+  }
+}
+
+export function DateFilterInput({ field }: { field: SongSortField }) {
+  const columnFilters = useHomeStore(s => s.columnFilters)
+  const setColumnFilter = useHomeStore(s => s.setColumnFilter)
+  const t = useTranslations('files')
+  const [open, setOpen] = useState(false)
+  const [clicks, setClicks] = useState(0)
+  const [localRange, setLocalRange] = useState<DateRange | undefined>(undefined)
+
+  const currentValue = columnFilters[field]
+  const committedRange = parseRange(currentValue)
+  const isActive = !!currentValue
+
+  function handleOpen(isOpen: boolean) {
+    if (isOpen) {
+      setLocalRange(parseRange(currentValue))
+      setClicks(0)
+    }
+    setOpen(isOpen)
+  }
+
+  function handleSelect(newRange: DateRange | undefined) {
+    const nextClicks = clicks + 1
+    setClicks(nextClicks)
+
+    if (nextClicks === 1) {
+      // First click — store from locally
+      setLocalRange({ from: newRange?.from })
+    } else {
+      // Second click — commit full range and close
+      setLocalRange(newRange)
+      if (newRange?.from && newRange?.to) {
+        setColumnFilter(field, `${formatDate(newRange.from)}..${formatDate(newRange.to)}`)
+      }
+      setOpen(false)
+    }
+  }
+
+  return (
+    <Popover open={open} onOpenChange={handleOpen}>
+      <PopoverTrigger asChild onClick={e => e.stopPropagation()}>
+        <InputGroup className='h-6 cursor-pointer'>
+          <InputGroupAddon align='inline-start'>
+            <InputGroupText>
+              <CalendarIcon className='h-3.5 w-3.5' />
+            </InputGroupText>
+          </InputGroupAddon>
+          <InputGroupInput
+            readOnly
+            className='cursor-pointer text-xs'
+            placeholder={t('dateFilterPlaceholder')}
+            value={
+              isActive && committedRange?.from
+                ? formatDateRange(committedRange.from, committedRange.to ?? committedRange.from)
+                : ''
+            }
+          />
+        </InputGroup>
+      </PopoverTrigger>
+      <PopoverContent className='w-auto p-3' align='start'>
+        <div className='flex flex-col gap-3'>
+          <Calendar mode='range' selected={localRange} onSelect={handleSelect} numberOfMonths={2} />
+          <div className='flex gap-2'>
+            {isActive && (
+              <Button
+                variant='ghost'
+                size='sm'
+                className='flex-1'
+                onClick={() => {
+                  setLocalRange(undefined)
+                  setColumnFilter(field, '')
+                  setOpen(false)
+                }}>
+                <X className='h-3 w-3 mr-1' />
+                {t('clearDateFilter')}
+              </Button>
+            )}
+            {localRange?.from && (
+              <Button
+                variant='default'
+                size='sm'
+                className='flex-1'
+                onClick={() => {
+                  const from = localRange.from!
+                  const to = localRange.to ?? from
+                  setColumnFilter(field, `${formatDate(from)}..${formatDate(to)}`)
+                  setOpen(false)
+                }}>
+                <Check className='h-3 w-3 mr-1' />
+                {t('applyDateFilter')}
+              </Button>
+            )}
+          </div>
+        </div>
+      </PopoverContent>
+    </Popover>
+  )
+}
