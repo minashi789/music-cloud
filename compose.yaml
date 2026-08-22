@@ -94,15 +94,17 @@ services:
     volumes:
       - /srv/music-cloud/library/MyWave:/music
       - /opt/music-cloud/wave.py:/wave.py
+      - /etc/music-cloud/secrets/tagr-login:/run/secrets/tagr_login:ro
+      - /etc/music-cloud/secrets/tagr-password:/run/secrets/tagr_password:ro
     working_dir: /music
     entrypoint: /bin/sh
     environment:
       PATH: "/home/spotdl/.local/bin:/usr/local/bin:/usr/bin:/bin"
       USERNAME: "${USERNAME}"
       API_KEY: "${API_KEY}"
+      TAGR_URL: "${AUTH_URL}"
     command: >
       -c "
-      pip install --no-cache-dir spotdl > /dev/null 2>&1;
       while true; do
         echo 'Запуск генерации персональной Волны...';
         python3 /wave.py;
