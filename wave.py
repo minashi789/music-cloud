@@ -1,3 +1,4 @@
+import sys
 import urllib.request
 import urllib.parse
 import json
@@ -203,7 +204,8 @@ try:
                 cover_path = Path(MUSIC_DIR) / f"{base_name}.jpg"
 
                 result = subprocess.run([
-                    "yt-dlp", f"ytsearch1:{query}",
+                    sys.executable, "-m", "yt_dlp", 
+                    f"ytsearch1:{query}",
                     "--extractor-args", "youtube:player_client=web_embedded",
                     "-x", "--audio-format", "m4a", "--audio-quality", "0",
                     "--output", output_template,
